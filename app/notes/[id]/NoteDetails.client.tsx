@@ -7,12 +7,13 @@ import css from "./NoteDetails.module.css";
 
 export default function NoteDetailsClient() {
   const params = useParams();
-  const id = Number(params?.id);
+  const id = params?.id;
 
   const { data: note, isLoading, isError } = useQuery({
     queryKey: ["note", id],
     queryFn: () => fetchNoteById(String(id)),
-    enabled: !isNaN(id),
+    enabled: !!id, 
+    refetchOnMount: false,
   });
 
   if (isLoading) return <p>Loading, please wait...</p>;
